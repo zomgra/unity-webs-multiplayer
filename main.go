@@ -237,15 +237,15 @@ func main() {
 	defaultPort := 80
 
 	for i := 1; i < 10; i++ {
-		addr := flag.String("addr", fmt.Sprintf(":%d", defaultPort), "http service address")
-		err := http.ListenAndServe(*addr, nil)
+
+		err := http.ListenAndServe(fmt.Sprintf(":%d", defaultPort), nil)
 		if err != nil {
 			defaultPort++
 		} else {
 			log.Printf("New port: %d", defaultPort)
 			break
 		}
-		log.Fatal("ListenAndServe: ", err)
+
 	}
 }
 
