@@ -234,9 +234,17 @@ func main() {
 		go cl.SendMessages()
 		h.Add <- cl
 	})
-	addr := flag.String("addr", ":8080", "http service address")
-	err := http.ListenAndServe(*addr, nil)
-	if err != nil {
+	defaultPort := 80
+
+	for i := 1; i < 10; i++ {
+		addr := flag.String("addr", fmt.Sprintf(":%d", defaultPort), "http service address")
+		err := http.ListenAndServe(*addr, nil)
+		if err != nil {
+			defaultPort++
+		} else {
+			log.Printf("New port: %d", defaultPort)
+			break
+		}
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
